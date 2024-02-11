@@ -53,3 +53,30 @@
 
 ### 2.2 Online Tools
     http://tripledes.online-domain-tools.com/
+
+## 3. AES (Advanced Encryption Standard)
+
+### 3.1 OpenSSL Example
+
+    openssl enc -e -des-ede3-cbc -in {input_file_name} -out {output_file_name} -K {192-bit key} -iv {iv} -a
+
+    #Example
+    #Encryption
+    openssl enc -e -aes128 -in plain -out cipher -iv 00000000000000000000000000000000 -K 11111111111111112222222222222222 -a
+
+    #Decryption
+    openssl enc -d -aes128 -in cipher -out plain -iv 00000000000000000000000000000000 -K 11111111111111112222222222222222 -a
+
+* enc: Encrypt/Decrypt command
+* -e: Specify encrypt method
+* -aes128: Use AES algorithm with 128 bit (16 byte) key
+* -in {input_file_name}: Input file. Note, DES takes input in ASCII format for encryption.
+* -out {output_file_name}: Output file name where ciphertext will be stored.
+* -K {key}: Provide 128 bit RAW Key in HEX format
+* -iv {iv}: Provide Initialization Vector
+* -a: Output in Base64 format
+* -d: Decrypt
+* For decryption openssl can take input in base64 format if -a option is defined.
+
+### 3.2 Online Tools
+    http://aes.online-domain-tools.com/
