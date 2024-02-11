@@ -2,7 +2,7 @@
 
 ## 1. DES (Data Encryption Standard)
 
-### OpenSSL Example
+### 1.1 OpenSSL Example
 
     openssl enc -e -des -in {input_file_name} -out {output_file_name} -K {64-bit key} -iv {64-bit IV} -nosalt -a
 
@@ -23,5 +23,5 @@
 * -a: Output in Base64 format 
 * -d: Decrypt
 
-### Online Tools
+### 1.2 Online Tools
     http://des.online-domain-tools.com/
