@@ -1,6 +1,6 @@
 # Cryptography Simplified
 
-## DES (Data Encryption Standard)
+## 1. DES (Data Encryption Standard)
 
 ### OpenSSL Example
 
