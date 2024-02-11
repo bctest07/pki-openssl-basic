@@ -80,3 +80,26 @@
 
 ### 3.2 Online Tools
     http://aes.online-domain-tools.com/
+
+## 4. RSA (Rivest Shamir Alderman)
+
+### 4.1 OpenSSL Example
+
+    # Generation
+    openssl genrsa -out private.key 4096
+    openssl rsa -in private.key -pubout -out public.key
+
+    # View
+    openssl rsa -in private.key -noout -text
+    openssl rsa -in public.key -pubin -noout -text
+
+    # Encrypt/Decrypt
+    openssl rsautl -encrypt -inkey public.key -pubin -in plain
+    openssl rsautl -decrypt -inkey private.key -in encrypted
+
+    # Digital Signature
+    openssl dgst -sha256 -sign private.key -out plain.signature plain
+    openssl dgst -sha256 -verify public.key -signature plain.signature plain
+    # OR 
+    openssl rsautl -sign -inkey private.key -in plain -out plain.signature
+    openssl rsautl -verify -inkey public.key -pubin -in plain.signature
