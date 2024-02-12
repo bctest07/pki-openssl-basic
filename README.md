@@ -103,3 +103,49 @@
     # OR 
     openssl rsautl -sign -inkey private.key -in plain -out plain.signature
     openssl rsautl -verify -inkey public.key -pubin -in plain.signature
+
+
+### 4.2. OpenSSL Digital Certificates
+
+    #Digital Certificate
+    #Create CSR 
+    openssl req -key private.key -new -out ca.csr
+
+    # OR both Private Key and CSR
+    openssl req -newkey rsa:2048 -keyout domain.key -out domain.csr
+
+    #Signing Certificate
+    #Self Sign
+    openssl x509 -signkey private.key -in ca.csr -req -days 365 -out ca.crt
+    #Sign with CA Key and CRT
+    openssl x509 -CA ca.crt -CAkey private.key -in server.csr -req -days 365 -out server.crt
+
+    #Encrypting/Decrypting with Certificate
+    openssl rsautl -encrypt -inkey server.crt -certin -in plain -out encrypted
+
+## 5. ECDH (Elliptic Curve Diffie Helman)
+
+### 5.1 OpenSSL Example
+
+    # Entity 1 key generation
+    openssl ecparam -name prime256v1 -out curve.pem
+    openssl ecparam -name prime256v1 -genkey -noout -out private.pem
+    openssl ec -in private.pem -pubout -out public.pem
+
+    # Entity 2 (Other) key generation
+    openssl ecparam -name prime256v1 -out curve_other.pem
+    openssl ecparam -name prime256v1 -genkey -noout -out private_other.pem
+    openssl ec -in private_other.pem -pubout -out public_other.pem
+
+    # Shared Secret Entity 1
+    openssl pkeyutl -derive -inkey private.pem  -peerkey public_other.pem -out secret.bin
+
+    # Shared Secret Entity 2 (Other)
+    openssl pkeyutl -derive -inkey private_other.pem  -peerkey public.pem -out secret_other.bin
+
+    # Compare secret.bin and secret_other.bin using xxd command
+    xxd secret.bin
+    xxd secret_other.bin
+
+    #or use diff command
+    diff secret.bin secret_other.bin
