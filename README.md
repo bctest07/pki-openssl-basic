@@ -128,12 +128,10 @@
 ### 5.1 OpenSSL Example
 
     # Entity 1 key generation
-    openssl ecparam -name prime256v1 -out curve.pem
     openssl ecparam -name prime256v1 -genkey -noout -out private.pem
     openssl ec -in private.pem -pubout -out public.pem
 
     # Entity 2 (Other) key generation
-    openssl ecparam -name prime256v1 -out curve_other.pem
     openssl ecparam -name prime256v1 -genkey -noout -out private_other.pem
     openssl ec -in private_other.pem -pubout -out public_other.pem
 
@@ -149,3 +147,36 @@
 
     #or use diff command
     diff secret.bin secret_other.bin
+
+## 6. PGP/GPG
+    # Generate
+    gpg --full-generate-key
+    
+    # List Public Keys
+    gpg --list-public-keys
+    gpg --list-public-keys --keyid-format=long
+ 
+    # List Secret Keys
+    gpg --list-secret-keys
+
+    # Export Public Key
+    gpg --export -o public  <KEY_ID>
+    # Export armored output (base64)
+    gpg --export --armor -o public  <KEY_ID>
+
+    # Export Secret Key
+    gpg --export-secret-key <KEY_ID> > private
+    # Export armored output (base64)
+    gpg --export-secret-key --armor <KEY_ID> > private
+
+    # Import Keys
+    gpg --import public
+
+    # Encrypt/Decrypt
+    gpg -e --armor -r anshul-a.gupta@thalesgroup.com plain
+    gpg -d plain.gpg
+
+
+    #Trust
+    gpg --edit-key <KEY_ID>
+    trust 
